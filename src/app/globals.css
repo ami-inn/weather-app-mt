@@ -1,1 +1,39 @@
 @import "tailwindcss";
+
+@theme {
+  --font-oregano: var(--font-oregano), "cursive";
+  --font-roboto: var(--font-roboto), "sans-serif";
+  --font-poppins: var(--font-poppins), "sans-serif";
+  --color-primary: #7284FF;
+  --color-secondary: #D8D8F0;
+  --color-bg: #F8F8FF;
+}
+
+
+
+html ,body{
+  font-family: var(--font-poppins);
+  background-color: var(--color-bg);
+  
+}
+
+main {
+  @apply min-h-screen
+}
+
+h1 {
+  @apply max-sm:text-[3rem] text-2xl  text-primary leading-tight xl:tracking-[-2px] font-semibold;
+}
+
+h2 {
+  @apply max-sm:text-xl  text-primary;
+}
+
+input {
+  @apply w-full   inset-shadow rounded-2xl focus:outline-none bg-white;
+}
+
+@utility inset-shadow {
+ 
+  backdrop-filter: blur(10px);
+}
