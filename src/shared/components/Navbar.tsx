@@ -1,17 +1,21 @@
 'use client';
 
-import { LucideSearch, Cloud, Zap } from "lucide-react";
-import React, { useState } from "react";
+import { Cloud, Zap, RefreshCw } from "lucide-react";
+import React from "react";
 import { useWeatherStore } from "@/store/weather";
+import { useWeatherData } from "@/hooks/useWeatherData";
+import SearchDropdown from "./SearchDropdown";
 
 const Navbar = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const { lastUpdated } = useWeatherStore();
+  const { lastUpdated, currentLocation } = useWeatherStore();
+  const { refreshWeatherData, isLoading } = useWeatherData();
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Add search functionality here
-    console.log("Searching for:", searchTerm);
+  const handleRefresh = () => {
+    refreshWeatherData();
+  };
+
+  const handleLocationSelect = (location: string) => {
+    console.log("Location selected:", location);
   };
 
   return (
@@ -27,41 +31,42 @@ const Navbar = () => {
               Weather Dashboard
             </h2>
             <p className="text-sm text-gray-500">
-              Real-time weather analytics
+              Real-time weather analytics • {currentLocation}
             </p>
           </div>
         </div>
       </div>
 
-      {/* Right side: Search and Status */}
+      {/* Right side: Controls */}
       <div className="flex items-center gap-6">
         {/* Auto-refresh Status */}
-        <div className="hidden md:flex items-center gap-2 text-sm text-gray-600">
-          <Zap className="w-4 h-4 text-green-500" />
-          <span>Auto-refresh: 1hr</span>
+        <div className="hidden lg:flex items-center gap-4 text-sm text-gray-600">
+          <div className="flex items-center gap-2">
+            <Zap className="w-4 h-4 text-green-500" />
+            <span>Auto-refresh: 1hr</span>
+          </div>
+          
           {lastUpdated && (
-            <span className="text-xs text-gray-400">
-              • Last: {lastUpdated.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}
-            </span>
+            <div className="text-xs text-gray-400">
+              Last updated: {lastUpdated.toLocaleTimeString('en-US', { 
+                hour: 'numeric', 
+                minute: '2-digit' 
+              })}
+            </div>
           )}
+          
+          <button
+            onClick={handleRefresh}
+            disabled={isLoading}
+            className="flex items-center gap-1 px-3 py-1.5 text-xs bg-gray-100 hover:bg-gray-200 rounded-md transition-colors disabled:opacity-50"
+          >
+            <RefreshCw className={`w-3 h-3 ${isLoading ? 'animate-spin' : ''}`} />
+            Refresh
+          </button>
         </div>
 
         {/* Search Bar */}
-        <form onSubmit={handleSearch} className="relative">
-          <input
-            type="text"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Search location..."
-            className="pl-4 pr-10 py-2.5 w-64 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white shadow-sm"
-          />
-          <button
-            type="submit"
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-          >
-            <LucideSearch className="w-5 h-5" />
-          </button>
-        </form>
+        <SearchDropdown onLocationSelect={handleLocationSelect} />
       </div>
     </nav>
   );

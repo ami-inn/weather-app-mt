@@ -1,6 +1,6 @@
 'use client';
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import WeatherImg from "../assets/weather.png";
 import Navbar from "@/shared/components/Navbar";
@@ -8,13 +8,24 @@ import Card from "@/shared/components/Card";
 import SummaryBox from "@/shared/components/SummaryBox";
 import WeatherChart from "@/shared/components/WeatherChart";
 import MetricSelector from "@/shared/components/MetricSelector";
+import LocationNotification from "@/shared/components/LocationNotification";
 import { weatherCards } from "@/constant";
 import { useWeatherData } from "@/hooks/useWeatherData";
 import { useWeatherStore } from "@/store/weather";
 
 const HomePage = () => {
   const { weatherData, isLoading } = useWeatherData();
-  const { selectedMetric, setSelectedMetric } = useWeatherStore();
+  const { selectedMetric, setSelectedMetric, currentLocation } = useWeatherStore();
+  const [showLocationNotification, setShowLocationNotification] = useState(false);
+  const [previousLocation, setPreviousLocation] = useState(currentLocation);
+
+  // Show notification when location changes
+  useEffect(() => {
+    if (currentLocation !== previousLocation && previousLocation) {
+      setShowLocationNotification(true);
+    }
+    setPreviousLocation(currentLocation);
+  }, [currentLocation, previousLocation]);
 
   if (isLoading && !weatherData) {
     return (
@@ -31,6 +42,13 @@ const HomePage = () => {
     <main className="flex flex-col min-h-screen px-4 lg:px-32 py-8 bg-gray-50">
       <Navbar />
       
+      {/* Location Change Notification */}
+      <LocationNotification
+        location={currentLocation}
+        show={showLocationNotification}
+        onClose={() => setShowLocationNotification(false)}
+      />
+      
       {/* Hero Weather Section */}
       <section className="w-full flex justify-center mt-4">
         <div className="relative w-full max-w-7xl">
@@ -45,7 +63,7 @@ const HomePage = () => {
               {weatherData?.currentTemp || 13}°
             </div>
             <div className="text-sm lg:text-lg font-medium drop-shadow-lg">
-              {weatherData?.location || "Telluride, CO, USA"}
+              {currentLocation}
             </div>
           </div>
           {/* Right bottom: Time and date info */}
