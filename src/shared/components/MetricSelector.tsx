@@ -55,7 +55,7 @@ const MetricSelector: React.FC<MetricSelectorProps> = ({ selectedMetric, onMetri
           <button
             key={metric.key}
             onClick={() => onMetricChange(metric.key)}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-200 ${
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-200 cursor-pointer ${
               isSelected
                 ? `${metric.bgColor} ${metric.borderColor} border-2 ${metric.color} shadow-md`
                 : 'bg-gray-50 border-2 border-gray-200 text-gray-600 hover:bg-gray-100'
