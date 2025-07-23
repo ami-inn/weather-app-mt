@@ -23,7 +23,7 @@ const Navbar = () => {
       {/* Left side: Brand */}
       <div className="flex items-center gap-3">
         <div className="flex items-center gap-2">
-          <div className="p-2 bg-blue-600 rounded-lg">
+          <div className="p-2 bg-primary rounded-lg">
             <Cloud className="w-6 h-6 text-white" />
           </div>
           <div>

@@ -95,7 +95,7 @@ const SearchDropdown: React.FC<SearchDropdownProps> = ({ onLocationSelect }) => 
             if (searchResults.length > 0) setIsOpen(true);
           }}
           placeholder="Search location..."
-          className="pl-4 pr-20 py-2.5 w-64 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white shadow-sm transition-all"
+          className="pl-4 pr-20 py-2.5 w-64 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-white shadow-sm transition-all"
         />
         
         <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1">

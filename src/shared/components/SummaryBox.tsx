@@ -17,7 +17,7 @@ const SummaryBox: React.FC<SummaryBoxProps> = ({
   currentRainfall
 }) => {
   return (
-    <div className="bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl p-6 text-white shadow-lg">
+    <div className="bg-gradient-to-br from-[#A6B1FE] to-[#7284FF] rounded-xl p-6 text-white shadow-lg">
       <div className="flex items-center gap-2 mb-2">
         <MapPin size={16} />
         <span className="text-sm font-medium opacity-90">{location}</span>
