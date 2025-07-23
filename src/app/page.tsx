@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import WeatherImg from "../assets/weather.png";
+import weatherNewImg from "../assets/weathernew.png";
 import Navbar from "@/shared/components/Navbar";
 import Card from "@/shared/components/Card";
 import SummaryBox from "@/shared/components/SummaryBox";
@@ -53,7 +54,7 @@ const HomePage = () => {
       <section className="w-full flex justify-center mt-4">
         <div className="relative w-full max-w-7xl">
           <Image
-            src={WeatherImg}
+            src={weatherNewImg}
             alt="Weather"
             className="w-full h-[300px] lg:h-[400px] object-cover rounded-xl shadow-xl"
           />
