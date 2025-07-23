@@ -20,7 +20,7 @@ const HomePage = () => {
   const [showLocationNotification, setShowLocationNotification] = useState(false);
   const [previousLocation, setPreviousLocation] = useState(currentLocation);
 
-  // Show notification when location changes
+  
   useEffect(() => {
     if (currentLocation !== previousLocation && previousLocation) {
       setShowLocationNotification(true);

@@ -52,12 +52,12 @@ const WeatherChart: React.FC<WeatherChartProps> = ({ data, metricType, isLoading
   const [hasError, setHasError] = useState(false);
   const config = getMetricConfig(metricType);
   
-  // Reset error state when data or metric changes
+ 
   useEffect(() => {
     setHasError(false);
   }, [data, metricType]);
   
-  // Add comprehensive data validation
+ 
   if (!data) {
     return (
       <div className="flex items-center justify-center h-[300px] text-gray-400">
@@ -100,7 +100,7 @@ const WeatherChart: React.FC<WeatherChartProps> = ({ data, metricType, isLoading
     );
   }
   
-  // Transform data for chart with comprehensive validation
+
   const chartData = data.labels.map((label, index) => {
     const value = data.values[index];
     return {
@@ -131,7 +131,7 @@ const WeatherChart: React.FC<WeatherChartProps> = ({ data, metricType, isLoading
     );
   }
 
-  // If there was an error or we should use simple chart
+
   if (hasError || useSimpleChart) {
     return (
       <div className="w-full">
@@ -151,7 +151,7 @@ const WeatherChart: React.FC<WeatherChartProps> = ({ data, metricType, isLoading
     );
   }
 
-  // Recharts implementation with comprehensive error handling
+
   try {
     return (
       <div className="w-full">
@@ -262,7 +262,7 @@ const WeatherChart: React.FC<WeatherChartProps> = ({ data, metricType, isLoading
   } catch (error) {
     console.error('Recharts rendering error:', error);
     setHasError(true);
-    // Fallback to simple chart if Recharts fails
+
     return (
       <div className="w-full">
         <div className="text-xs text-amber-600 mb-2 p-2 bg-amber-50 rounded">

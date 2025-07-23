@@ -48,7 +48,7 @@ const SearchDropdown: React.FC<SearchDropdownProps> = ({ onLocationSelect }) => 
     }, 500); // Increased debounce time
 
     return () => clearTimeout(timeoutId);
-  }, [searchTerm]); // Removed searchForLocations and clearSearchResults from dependencies
+  }, [searchTerm]); 
 
   const handleLocationSelect = (location: string) => {
     selectLocation(location);
@@ -62,7 +62,7 @@ const SearchDropdown: React.FC<SearchDropdownProps> = ({ onLocationSelect }) => 
     const value = e.target.value;
     setSearchTerm(value);
     
-    // Clear results immediately if input is too short
+
     if (value.length < 2) {
       clearSearchResults();
       setIsOpen(false);

@@ -17,8 +17,8 @@ export const useWeatherData = () => {
   const { data, isLoading: queryLoading, error, refetch } = useQuery({
     queryKey: ['weather', currentLocation],
     queryFn: () => fetchWeatherData(currentLocation),
-    refetchInterval: 60 * 60 * 1000, // Refetch every hour (3600000 ms)
-    staleTime: 30 * 60 * 1000, // Consider data stale after 30 minutes
+    refetchInterval: 60 * 60 * 1000, 
+    staleTime: 30 * 60 * 1000, 
     retry: 3,
   });
 

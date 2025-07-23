@@ -36,7 +36,7 @@ export const weatherCards = [
     },
 ];
 
-// Weather summary data structure
+
 export const weatherSummary = {
   temperature: {
     current: 13,
