@@ -1,86 +1,152 @@
+'use client';
+
 import React from "react";
-import { CloudHail, Sunrise, Sunset, Sun } from "lucide-react";
-import WeatherImg from "../assets/weather.png";
 import Image from "next/image";
+import WeatherImg from "../assets/weather.png";
 import Navbar from "@/shared/components/Navbar";
 import Card from "@/shared/components/Card";
+import SummaryBox from "@/shared/components/SummaryBox";
+import WeatherChart from "@/shared/components/WeatherChart";
+import MetricSelector from "@/shared/components/MetricSelector";
 import { weatherCards } from "@/constant";
+import { useWeatherData } from "@/hooks/useWeatherData";
+import { useWeatherStore } from "@/store/weather";
 
-const page = () => {
+const HomePage = () => {
+  const { weatherData, isLoading } = useWeatherData();
+  const { selectedMetric, setSelectedMetric } = useWeatherStore();
+
+  if (isLoading && !weatherData) {
+    return (
+      <main className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600 font-medium">Loading weather data...</p>
+        </div>
+      </main>
+    );
+  }
+
   return (
-    <main className="flex flex-col min-h-screen px-32 py-8  items-center">
+    <main className="flex flex-col min-h-screen px-4 lg:px-32 py-8 bg-gray-50">
       <Navbar />
-      {/* weathre info section */}
+      
+      {/* Hero Weather Section */}
       <section className="w-full flex justify-center mt-4">
-        <div className="relative w-full ">
+        <div className="relative w-full max-w-7xl">
           <Image
             src={WeatherImg}
             alt="Weather"
-            className="w-full h-[450px] object-cover rounded-xl shadow-xl"
+            className="w-full h-[300px] lg:h-[400px] object-cover rounded-xl shadow-xl"
           />
           {/* Left bottom: Temperature and location */}
-          <div className="absolute left-14 bottom-14 text-white">
-            <div className="text-8xl font-light font-poppins drop-shadow-lg">
-              13°
+          <div className="absolute left-4 lg:left-14 bottom-4 lg:bottom-14 text-white">
+            <div className="text-4xl lg:text-8xl font-light font-poppins drop-shadow-lg">
+              {weatherData?.currentTemp || 13}°
             </div>
-            <div className="text-lg font-medium drop-shadow-lg">
-              Telluride, CO, USA
+            <div className="text-sm lg:text-lg font-medium drop-shadow-lg">
+              {weatherData?.location || "Telluride, CO, USA"}
             </div>
           </div>
-          {/* Right bottom: Time and sunset info */}
-          <div className="absolute right-14 bottom-14 text-right text-white">
-            <div className="text-xl font-bold drop-shadow-lg">7:50 PM</div>
-            <div className="text-md drop-shadow-lg">Sunset Time, Monday</div>
+          {/* Right bottom: Time and date info */}
+          <div className="absolute right-4 lg:right-14 bottom-4 lg:bottom-14 text-right text-white">
+            <div className="text-lg lg:text-xl font-bold drop-shadow-lg">
+              {new Date().toLocaleTimeString('en-US', { 
+                hour: 'numeric', 
+                minute: '2-digit',
+                hour12: true 
+              })}
+            </div>
+            <div className="text-sm lg:text-md drop-shadow-lg">
+              {new Date().toLocaleDateString('en-US', { weekday: 'long' })}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* about section graph and other thisng */}
-      <section className="flex flex-col md:flex-row w-full mt-8 gap-8">
-        {/* Left side: 40% on desktop, full width on mobile */}
-        <div className="md:w-[40%] w-full  flex flex-col justify-center">
-          <div className="grid grid-cols-2 px-5 py-6 gap-6 border-secondary bg-white border-1 rounded-xl ">
+      {/* Dashboard Content */}
+      <section className="flex flex-col xl:flex-row w-full max-w-7xl mx-auto mt-8 gap-8">
+        {/* Left side: Summary and Cards */}
+        <div className="xl:w-[35%] w-full flex flex-col gap-6">
+          {/* Summary Box */}
+          {weatherData && (
+            <SummaryBox
+              location={weatherData.location}
+              date={weatherData.date}
+              currentTemp={weatherData.currentTemp}
+              currentRainfall={weatherData.currentRainfall}
+            />
+          )}
+
+          {/* Weather Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {weatherCards.map((card, index) => (
               <Card
                 key={index}
                 icon={card.icon}
                 label={card.label}
                 percentage={card.percentage}
+                unit={card.unit}
               />
             ))}
           </div>
-          {/* Small bottom div */}
+
+          {/* Monthly Rainfall Card */}
           <div
-            className="mt-6 rounded-lg p-4 px-6 py-6 flex flex-col gap-2 shadow-md"
+            className="rounded-lg p-6 flex flex-col gap-2 shadow-md"
             style={{
               background: "linear-gradient(90deg, #A6B1FE 0%, #7284FF 100%)",
             }}
           >
-            <div className="flex justify-between ">
+            <div className="flex justify-between">
               <span className="text-sm text-white">Monthly Rainfall</span>
               <span className="text-sm font-medium text-white">45mm</span>
             </div>
             <div className="flex justify-between">
               <span className="text-sm text-white">This Year</span>
-              <span className="text-sm font-bold text-[#69EF91]">
-                +17% 
-              </span>
+              <span className="text-sm font-bold text-[#69EF91]">+17%</span>
             </div>
           </div>
         </div>
 
-
-        {/* Right side: 60% on desktop, full width on mobile */}
-        <div className="md:w-[60%] w-full bg-white rounded-xl shadow p-6 flex flex-col">
-          <h3 className="text-xl font-bold mb-4">Weather Graph</h3>
-          <div className="flex-1 flex items-center justify-center text-gray-400 min-h-[256px]">
-            {/* Placeholder for graph */}
-            Graph goes here
+        {/* Right side: Weather Chart */}
+        <div className="xl:w-[65%] w-full bg-white rounded-xl shadow-lg p-6">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between mb-6">
+            <h3 className="text-xl font-bold text-gray-800 mb-4 lg:mb-0">
+              Weather Analytics - Last 7 Days
+            </h3>
+            <div className="text-sm text-gray-500">
+              Updates every hour • Last updated: {' '}
+              {new Date().toLocaleTimeString('en-US', { 
+                hour: 'numeric', 
+                minute: '2-digit' 
+              })}
+            </div>
           </div>
+          
+          <MetricSelector
+            selectedMetric={selectedMetric}
+            onMetricChange={setSelectedMetric}
+          />
+
+          {weatherData ? (
+            <WeatherChart
+              data={weatherData[selectedMetric]}
+              metricType={selectedMetric}
+              isLoading={isLoading}
+            />
+          ) : (
+            <div className="flex items-center justify-center h-[300px] text-gray-400">
+              <div className="text-center">
+                <div className="animate-pulse text-lg mb-2">Loading chart data...</div>
+                <div className="text-sm">Fetching weather analytics</div>
+              </div>
+            </div>
+          )}
         </div>
       </section>
     </main>
   );
 };
 
-export default page;
+export default HomePage;

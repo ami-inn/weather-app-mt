@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import { Poppins, Roboto, Oregano } from "next/font/google";
+import { QueryProvider } from "@/providers/QueryProvider";
 import "./globals.css";
 
 export const metadata = {
-  title: "Welcome to Weather App",
-  description: "A simple weather app built with Next.js and Tailwind CSS",
+  title: "Weather Dashboard - Real-time Weather Analytics",
+  description: "A modern weather dashboard with real-time data visualization built with Next.js and Tailwind CSS",
 };
+
 const oregano = Oregano({
   subsets: ["latin"],
   weight: ["400"],
@@ -30,9 +32,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${roboto.variable} ${oregano.variable} ${poppins.variable}`}
+        className={`${roboto.variable} ${oregano.variable} ${poppins.variable} antialiased`}
       >
-        {children}
+        <QueryProvider>
+          {children}
+        </QueryProvider>
       </body>
     </html>
   );
