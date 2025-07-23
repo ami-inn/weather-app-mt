@@ -51,37 +51,7 @@ const HomePage = () => {
       />
       
       {/* Hero Weather Section */}
-      <section className="w-full flex justify-center mt-4">
-        <div className="relative w-full max-w-7xl">
-          <Image
-            src={weatherNewImg}
-            alt="Weather"
-            className="w-full h-[300px] lg:h-[400px] object-cover rounded-xl shadow-xl"
-          />
-          {/* Left bottom: Temperature and location */}
-          <div className="absolute left-4 lg:left-14 bottom-4 lg:bottom-14 text-white">
-            <div className="text-4xl lg:text-8xl font-light font-poppins drop-shadow-lg">
-              {weatherData?.currentTemp || 13}°
-            </div>
-            <div className="text-sm lg:text-lg font-medium drop-shadow-lg">
-              {currentLocation}
-            </div>
-          </div>
-          {/* Right bottom: Time and date info */}
-          <div className="absolute right-4 lg:right-14 bottom-4 lg:bottom-14 text-right text-white">
-            <div className="text-lg lg:text-xl font-bold drop-shadow-lg">
-              {new Date().toLocaleTimeString('en-US', { 
-                hour: 'numeric', 
-                minute: '2-digit',
-                hour12: true 
-              })}
-            </div>
-            <div className="text-sm lg:text-md drop-shadow-lg">
-              {new Date().toLocaleDateString('en-US', { weekday: 'long' })}
-            </div>
-          </div>
-        </div>
-      </section>
+
 
       {/* Dashboard Content */}
       <section className="flex flex-col xl:flex-row w-full max-w-7xl mx-auto mt-8 gap-8">
