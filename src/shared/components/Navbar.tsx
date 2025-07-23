@@ -12,7 +12,7 @@ const Navbar = () => {
         <div className="relative">
           <input
             type="text"
-            placeholder="Search"
+            placeholder="Search Location..."
             className="pl-3 px-3 placeholder:text-[#A8ABC4] text-[#A8ABC4]  pr-10 py-2 rounded border border-secondary focus:outline-none"
           />
           <span className="absolute right-3 top-1/2 -translate-y-1/2 text-secondary">

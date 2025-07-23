@@ -24,14 +24,14 @@ const page = () => {
             className="w-full h-[450px] object-cover rounded-xl shadow-xl"
           />
           {/* Left bottom: Temperature and location */}
-          <div className="absolute left-6 bottom-6 text-white">
-            <div className="text-6xl font-bold drop-shadow-lg">13°</div>
+          <div className="absolute left-14 bottom-14 text-white">
+            <div className="text-8xl font-light font-poppins drop-shadow-lg">13°</div>
             <div className="text-lg font-medium drop-shadow-lg">
               Telluride, CO, USA
             </div>
           </div>
           {/* Right bottom: Time and sunset info */}
-          <div className="absolute right-6 bottom-6 text-right text-white">
+          <div className="absolute right-14 bottom-14 text-right text-white">
             <div className="text-xl font-bold drop-shadow-lg">7:50 PM</div>
             <div className="text-md drop-shadow-lg">Sunset Time, Monday</div>
           </div>
